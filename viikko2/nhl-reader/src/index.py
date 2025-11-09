@@ -1,9 +1,8 @@
+from rich.console import Console
+from rich.prompt import Prompt
+
 from player_stats import PlayerStats
 from player_reader import PlayerReader
-
-from rich.console import Console
-from rich.table import Table
-from rich.prompt import Prompt
 
 def main():
     # Select season
@@ -16,27 +15,9 @@ def main():
     stats = PlayerStats(reader)
     nationality = Prompt.ask("Select nationality", choices=stats.get_all_nationalities())
 
-    # Create a Rich table
-    table = Table(title="Top Finnish Scorers 2024-25")
-    table.add_column("Name", justify="left", style="cyan", no_wrap=True)
-    table.add_column("Team", justify="left", style="magenta")
-    table.add_column("Goals", justify="right", style="green")
-    table.add_column("Assists", justify="right", style="green")
-    table.add_column("Points", justify="right", style="green")
-
-    # Add filtered player data
-    players = stats.top_scorers_by_nationality(nationality)
-    for player in players:
-        table.add_row(
-            player.name,
-            player.team,
-            str(player.goals),
-            str(player.assists),
-            str(player.points)
-        )
-
+    # Print table
     console = Console()
-    console.print(table)
+    console.print(stats.top_scorers_by_nationality_table(nationality))
 
 if __name__ == "__main__":
     main()

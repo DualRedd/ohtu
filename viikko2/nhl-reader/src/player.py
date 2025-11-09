@@ -1,11 +1,13 @@
 class Player:
-    def __init__(self, dict):
-        self.name = dict['name']
-        self.nationality = dict['nationality']
-        self.team = dict['team']
-        self.assists = dict['assists']
-        self.goals = dict['goals']
-        self.points = self.goals + self.assists
-    
+    def __init__(self, player_dict):
+        self.name = player_dict['name']
+        self.nationality = player_dict['nationality']
+        self.team = player_dict['team']
+        self.assists = player_dict['assists']
+        self.goals = player_dict['goals']
+
+    def points(self) -> int:
+        return self.goals + self.assists
+
     def __str__(self):
-        return f"{self.name:22} {self.team:16} {self.goals:<2} + {self.assists:<2} = {self.points:<2}" 
+        return f"{self.name:22} {self.team:16} {self.goals:<2} + {self.assists:<2} = {self.points:<2}"
