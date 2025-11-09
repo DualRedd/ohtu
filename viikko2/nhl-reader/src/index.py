@@ -11,8 +11,8 @@ def main():
         players.append(player)
 
     print("Players from FIN:")
-    fin_players = [player for player in players if player.nationality == "FIN"]
-    for player in fin_players:
+    fin_players = filter(lambda p : p.nationality == "FIN", players)
+    for player in sorted(fin_players, key=lambda p : p.points, reverse=True):
         print(player)
 
 
