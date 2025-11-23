@@ -6,5 +6,3 @@ HY:n ohjelmistotuotantokurssin tehtävärepo
 https://github.com/DualRedd/ohtuvarasto
 
 https://github.com/DualRedd/ohtuwebcounter
-
-
