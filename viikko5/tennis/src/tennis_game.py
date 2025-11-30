@@ -21,8 +21,11 @@ class TennisGame:
         return score_map[score]
 
     def get_score(self) -> str:
-        if self.player1_score == self.player2_score and self.player1_score >= 3:
-            return "Deuce"
+        if self.player1_score == self.player2_score:
+            if self.player1_score >= 3:
+                return "Deuce"
+            else:
+                return f"{self.score_to_string(self.player1_score)}-All"
 
         if self.player1_score >= 4 or self.player2_score >= 4:
             score_diff = self.player1_score - self.player2_score
@@ -31,9 +34,5 @@ class TennisGame:
             else:
                 return "Win for " + (self.player1_name if score_diff > 0 else self.player2_name)
 
-        score = f"{self.score_to_string(self.player1_score)}-"
-        if self.player1_score == self.player2_score:
-            score += "All"
-        else:
-            score += self.score_to_string(self.player2_score)
+        score = f"{self.score_to_string(self.player1_score)}-{self.score_to_string(self.player2_score)}"
         return score
