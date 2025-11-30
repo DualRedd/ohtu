@@ -5,11 +5,13 @@ class TennisGame:
         self.player1_score = 0
         self.player2_score = 0
 
-    def won_point(self, player_name: str):
-        if player_name == "player1":
+    def add_point(self, player_name: str):
+        if player_name == self.player1_name:
             self.player1_score = self.player1_score + 1
-        else:
+        elif player_name == self.player2_name:
             self.player2_score = self.player2_score + 1
+        else:
+            raise ValueError("Unknown player name")
     
     @classmethod
     def score_to_string(cls, score: int) -> str | None:
@@ -20,7 +22,7 @@ class TennisGame:
         score = ""
 
         if self.player1_score == self.player2_score:
-            if self.player1_score > 2:
+            if self.player1_score >= 3:
                 score = "Deuce"
             else:
                 score = f"{self.score_to_string(self.player1_score)}-All"
