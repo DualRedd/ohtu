@@ -16,7 +16,9 @@ class TennisGame:
     @classmethod
     def score_to_string(cls, score: int) -> str | None:
         score_map = {0: "Love", 1: "Fifteen", 2: "Thirty", 3: "Forty"}
-        return score_map.get(score, "Unknown")
+        if score not in score_map:
+            raise ValueError(f"Invalid tennis score: {score}")
+        return score_map[score]
 
     def get_score(self) -> str:
         if self.player1_score == self.player2_score and self.player1_score >= 3:
