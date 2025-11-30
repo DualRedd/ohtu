@@ -14,7 +14,7 @@ class TennisGame:
             raise ValueError("Unknown player name")
 
     @staticmethod
-    def score_to_string(score: int) -> str | None:
+    def score_to_string(score: int) -> str:
         score_map = {0: "Love", 1: "Fifteen", 2: "Thirty", 3: "Forty"}
         if score not in score_map:
             raise ValueError(f"Invalid tennis score: {score}")
