@@ -1,6 +1,6 @@
 from statistics import Statistics
 from player_reader import PlayerReader
-from matchers import And, HasAtLeast, PlaysIn
+from matchers import And, All, Not, HasFewerThan, HasAtLeast, PlaysIn
 
 def main():
     url = "https://studies.cs.helsinki.fi/nhlstats/2024-25/players.txt"
