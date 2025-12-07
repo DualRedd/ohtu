@@ -1,15 +1,17 @@
 from tkinter import ttk, constants, StringVar
-from komennot import Komento, Summa, Erotus, Nollaus
+from komennot import Komento, Summa, Erotus, Nollaus, Kumoa
 
 class Kayttoliittyma:
     def __init__(self, sovelluslogiikka, root):
         self._sovelluslogiikka = sovelluslogiikka
         self._root = root
+        self._komento_historia = []
 
         self._komennot = {
-            Komento.SUMMA: Summa(sovelluslogiikka),
-            Komento.EROTUS: Erotus(sovelluslogiikka),
-            Komento.NOLLAUS: Nollaus(sovelluslogiikka),
+            Komento.SUMMA: Summa(sovelluslogiikka, self.lue_syote),
+            Komento.EROTUS: Erotus(sovelluslogiikka, self.lue_syote),
+            Komento.NOLLAUS: Nollaus(sovelluslogiikka, self.lue_syote),
+            Komento.KUMOA: Kumoa(sovelluslogiikka, self.hae_ja_poista_edellinen_komento)
         }
 
     def kaynnista(self):
@@ -52,6 +54,16 @@ class Kayttoliittyma:
         self._nollaus_painike.grid(row=2, column=2)
         self._kumoa_painike.grid(row=2, column=3)
 
+    def hae_ja_poista_edellinen_komento(self):
+        if not self._komento_historia:
+            return None
+        return self._komento_historia.pop()
+
+    def lisaa_komento_historiaan(self, komento):
+        if isinstance(komento, Kumoa):
+            return
+        self._komento_historia.append(komento)
+
     def lue_syote(self):
         arvo = 0
 
@@ -64,7 +76,8 @@ class Kayttoliittyma:
 
     def _suorita_komento(self, komento):
         komento_olio = self._komennot[komento]
-        komento_olio.suorita(self.lue_syote())
+        komento_olio.suorita()
+        self.lisaa_komento_historiaan(komento_olio)
 
         self._kumoa_painike["state"] = constants.NORMAL
 
