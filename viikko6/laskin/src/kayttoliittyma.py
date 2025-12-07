@@ -1,18 +1,16 @@
-from enum import Enum
 from tkinter import ttk, constants, StringVar
-
-
-class Komento(Enum):
-    SUMMA = 1
-    EROTUS = 2
-    NOLLAUS = 3
-    KUMOA = 4
-
+from komennot import Komento, Summa, Erotus, Nollaus
 
 class Kayttoliittyma:
     def __init__(self, sovelluslogiikka, root):
         self._sovelluslogiikka = sovelluslogiikka
         self._root = root
+
+        self._komennot = {
+            Komento.SUMMA: Summa(sovelluslogiikka),
+            Komento.EROTUS: Erotus(sovelluslogiikka),
+            Komento.NOLLAUS: Nollaus(sovelluslogiikka),
+        }
 
     def kaynnista(self):
         self._arvo_var = StringVar()
@@ -54,7 +52,7 @@ class Kayttoliittyma:
         self._nollaus_painike.grid(row=2, column=2)
         self._kumoa_painike.grid(row=2, column=3)
 
-    def _suorita_komento(self, komento):
+    def lue_syote(self):
         arvo = 0
 
         try:
@@ -62,14 +60,11 @@ class Kayttoliittyma:
         except Exception:
             pass
 
-        if komento == Komento.SUMMA:
-            self._sovelluslogiikka.plus(arvo)
-        elif komento == Komento.EROTUS:
-            self._sovelluslogiikka.miinus(arvo)
-        elif komento == Komento.NOLLAUS:
-            self._sovelluslogiikka.nollaa()
-        elif komento == Komento.KUMOA:
-            pass
+        return arvo
+
+    def _suorita_komento(self, komento):
+        komento_olio = self._komennot[komento]
+        komento_olio.suorita(self.lue_syote())
 
         self._kumoa_painike["state"] = constants.NORMAL
 
